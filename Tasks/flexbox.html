@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing Table</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f8f8;
+      }
+      .pricing-container {
+        display: flex;
+        height: 50vh;
+        gap: 30px;
+      }
+      .pricing-card {
+        width: 220px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 20px;
+      }
+      .pricing-header {
+        padding: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        border-radius: 10px 10px 0 0;
+        position: relative;
+      }
+      .pricing-header::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 10px;
+        clip-path: polygon(50% 100%, 0 0, 100% 0);
+      }
+
+      .basic::after {
+        background: #17a2b8;
+      }
+
+      .standard::after {
+        background: #007bff;
+      }
+
+      .premium::after {
+        background: #fd7e14;
+      }
+
+      .basic {
+        background: #17a2b8;
+      }
+      .standard {
+        background: #007bff;
+      }
+      .premium {
+        background: #fd7e14;
+      }
+      .pricing-list {
+        list-style: none;
+        padding: 0;
+      }
+      .pricing-list li {
+        padding: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .check {
+        color: green;
+      }
+      .cross {
+        color: red;
+      }
+      .price {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+      .price-basic {
+        color: #17a2b8;
+      }
+      .price-standard {
+        color: #007bff;
+      }
+      .price-premium {
+        color: #fd7e14;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pricing-container">
+      <div class="pricing-card">
+        <div class="pricing-header basic">Basic</div>
+        <ul class="pricing-list">
+          <li class="check">✔ Sample Text Here</li>
+          <li class="cross">✘ Other Text Title</li>
+          <li class="cross">✘ Text Space Goes Here</li>
+          <li class="cross">✘ Description Space</li>
+        </ul>
+        <div class="price price-basic">$2.99</div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-header standard">Standard</div>
+        <ul class="pricing-list">
+          <li class="check">✔ Sample Text Here</li>
+          <li class="check">✔ Other Text Title</li>
+          <li class="check">✔ Text Space Goes Here</li>
+          <li class="cross">✘ Description Space</li>
+        </ul>
+        <div class="price price-standard">$5.99</div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-header premium">Premium</div>
+        <ul class="pricing-list">
+          <li class="check">✔ Sample Text Here</li>
+          <li class="check">✔ Other Text Title</li>
+          <li class="check">✔ Text Space Goes Here</li>
+          <li class="check">✔ Description Space</li>
+        </ul>
+        <div class="price price-premium">$8.99</div>
+      </div>
+    </div>
+  </body>
+</html>
+
