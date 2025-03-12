@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>String Manipulation Tool</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      button {
+        margin: 5px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background: #007bff;
+        color: white;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      .history {
+        margin-top: 20px;
+        text-align: left;
+        padding: 10px;
+        border-top: 1px solid #ccc;
+        background: #f9f9f9;
+        border-radius: 5px;
+      }
+
+      .highlight {
+        background-color: yellow;
+        font-weight: bold;
+      }
+
+      #output {
+        margin-top: 10px;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        min-height: 50px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>String Manipulation Tool</h2>
+      <textarea
+        id="userInput"
+        placeholder="Enter text here"
+        style="width: 100%; height: 100px; padding: 10px"
+      ></textarea>
+      <br />
+      <input type="text" id="searchText" placeholder="Find text" />
+      <input type="text" id="replaceText" placeholder="Replace with" />
+      <br />
+      <button onclick="calculateLength()">Length</button>
+      <button onclick="toUpperCase()">Uppercase</button>
+      <button onclick="toLowerCase()">Lowercase</button>
+      <button onclick="toTitleCase()">Title Case</button>
+      <button onclick="countWords()">Word Count</button>
+      <button onclick="reverseString()">Reverse</button>
+      <button onclick="trimString()">Trim</button>
+      <button onclick="splitAndJoin()">Split & Join</button>
+      <button onclick="findAndHighlight()">Find</button>
+      <button onclick="replaceText()">Replace</button>
+      <button onclick="saveToFile()">Save to File</button>
+      <p id="output"></p>
+      <div class="history">
+        <h3>History</h3>
+        <ul id="historyList"></ul>
+      </div>
+    </div>
+
+    <script>
+      let history = [];
+
+      document
+        .getElementById("userInput")
+        .addEventListener("input", updateOutput);
+
+      function updateOutput() {
+        let input = getInput();
+        document.getElementById("output").innerText = input;
+      }
+
+      function updateHistory(result) {
+        if (history.length >= 5) {
+          history.shift();
+        }
+        history.push(result);
+        displayHistory();
+      }
+
+      function displayHistory() {
+        let historyList = document.getElementById("historyList");
+        historyList.innerHTML = "";
+        history.forEach((item, index) => {
+          let li = document.createElement("li");
+          li.innerHTML = `<span onclick="revertHistory(${index})" style="cursor: pointer; text-decoration: underline;">${item}</span>`;
+          historyList.appendChild(li);
+        });
+      }
+
+      function revertHistory(index) {
+        document.getElementById("output").innerText = history[index];
+      }
+
+      function calculateLength() {
+        let result = `Length: ${getInput().length}`;
+        displayResult(result);
+      }
+
+      function toUpperCase() {
+        let result = getInput().toUpperCase();
+        displayResult(result);
+      }
+
+      function toLowerCase() {
+        let result = getInput().toLowerCase();
+        displayResult(result);
+      }
+
+      function toTitleCase() {
+        let result = getInput()
+          .toLowerCase()
+          .replace(/\b\w/g, (char) => char.toUpperCase());
+        displayResult(result);
+      }
+
+      function countWords() {
+        let words = getInput()
+          .trim()
+          .split(/\s+/)
+          .filter((word) => word);
+        let result = `Word Count: ${words.length}`;
+        displayResult(result);
+      }
+
+      function reverseString() {
+        let result = getInput().split("").reverse().join("");
+        displayResult(result);
+      }
+
+      function trimString() {
+        let inputText = getInput();
+        if (inputText !== null && inputText !== undefined) {
+          let result = inputText.trim();
+          displayResult(result);
+        }
+      }
+
+      function splitAndJoin() {
+        let inputText = getInput();
+        if (inputText !== null && inputText !== undefined) {
+          let result = inputText.split(/\s+/).join("-"); 
+          displayResult(result);
+        }
+      }
+
+      function findAndHighlight() {
+        let text = getInput();
+        let searchText = document.getElementById("searchText").value;
+        if (searchText.trim() === "") return;
+        let regex = new RegExp(searchText, "gi");
+        let highlighted = text.replace(
+          regex,
+          (match) => `<span class='highlight'>${match}</span>`
+        );
+        document.getElementById("output").innerHTML = highlighted;
+      }
+
+      function replaceString() {
+        let text = getInput();
+        let searchText = document.getElementById("searchText").value;
+        let replaceText = document.getElementById("replaceText").value;
+        if (searchText.trim() === "") return;
+        let result = text.replace(new RegExp(searchText, "gi"), replaceText);
+        displayResult(result);
+      }
+
+      function saveToFile() {
+        let text = getInput();
+        let blob = new Blob([text], { type: "text/plain" });
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "output.txt";
+        a.click();
+      }
+
+      function getInput() {
+        return document.getElementById("userInput").value;
+      }
+
+      function displayResult(result) {
+        document.getElementById("output").innerText = result;
+        updateHistory(result);
+      }
+    </script>
+  </body>
+</html>
